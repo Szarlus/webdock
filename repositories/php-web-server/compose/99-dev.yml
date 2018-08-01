@@ -20,6 +20,14 @@ services:
       - global_composer_cache:/var/cache/composer/
       - ./../image/app/:/opt/app/
 
+  application_builder:
+    image: damlys/webdock-php-web-server-foundation:0.0.1-example
+    command: ["sleep", "infinity"]
+    volumes:
+      - global_composer_cache:/var/cache/composer/
+      - ./../image/app/:/opt/app/
+    working_dir: /opt/app/
+
 volumes:
   global_composer_cache:
     external: true

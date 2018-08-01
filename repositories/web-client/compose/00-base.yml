@@ -4,5 +4,7 @@ services:
     image: "damlys/webdock-web-client:${APP_VERSION}"
     env_file:
       - ./../.env
-    mem_limit: 50m
+    environment:
+      - APP_HTTP_WORKERS_COUNT=5
+    mem_limit: 64m
     memswap_limit: 0

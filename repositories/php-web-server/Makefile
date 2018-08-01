@@ -1,8 +1,5 @@
 #!/usr/bin/env make
 
-# Note:
-# `bash -c ""` is a workaround for correct handling of PHP exit codes with Docker.
-
 default: bash
 
 setup: create-volumes
@@ -11,30 +8,26 @@ start:
 	docker-compose start
 stop:
 	docker-compose stop
-diff:
-	diff .env.example .env
+logs:
+	docker-compose logs --timestamps --tail 25 --follow
 
+application-builder-bash:
+	docker-compose exec application_builder bash
 bash:
 	docker-compose exec cgi_server bash
-build-application: create-volumes
-	docker run \
-		--rm \
-		--volume global_composer_cache:/var/cache/composer/ \
-		--volume $(shell pwd)/image/app/:/opt/app/ \
-		--workdir /opt/app/ \
-	damlys/webdock-php-web-server-foundation:example \
-	bash -c "composer install"
+build-application:
+	docker-compose exec application_builder composer install
 build-image:
 	docker build --no-cache --tag damlys/webdock-php-web-server:unreleased ./image/
 create-volumes:
 	docker volume create --name=global_composer_cache
-fix-file-permissions:
-	docker-compose exec cgi_server chown --recursive $(shell id --user):$(shell id --group) .
+download-packages: create-volumes
+	docker-compose run --rm --no-deps application_builder composer install --no-autoloader --no-scripts
+fix-file-system-permissions:
+	docker-compose exec application_builder chown --recursive $(shell id -u):$(shell id -g) .
 install-xdebug:
 	docker-compose exec cgi_server operation --install-xdebug
 	docker-compose restart cgi_server
 	docker-compose restart http_server
-logs:
-	docker-compose logs --timestamps --tail 25 --follow cgi_server http_server task_scheduler example_worker
 migrate:
 	docker-compose exec cgi_server operation --migrate

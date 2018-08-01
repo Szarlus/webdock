@@ -27,9 +27,9 @@ services:
       - "${MYSQL_PORT}:3306"
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
     depends_on:
       - mysql
+    image: phpmyadmin/phpmyadmin:latest
     environment:
       - PMA_HOST=mysql
       - PMA_PORT=3306
@@ -42,10 +42,12 @@ services:
       - "${RABBITMQ_MANAGEMENT_PORT}:15672"
 
   redis_commander:
+    depends_on:
+      - redis
     image: rediscommander/redis-commander:latest
     environment:
       HTTP_USER: "${BACKING_SERVICES_USER}"
       HTTP_PASSWORD: "${REDIS_PASSWORD}"
-      REDIS_HOSTS: "logs:redis:6379:0:${REDIS_PASSWORD},session:redis:6379:1:${REDIS_PASSWORD},cache:redis:6379:2:${REDIS_PASSWORD}"
+      REDIS_HOSTS: "session:redis:6379:0:${REDIS_PASSWORD},cache:redis:6379:1:${REDIS_PASSWORD}"
     ports:
       - "${REDIS_COMMANDER_PORT}:8081"

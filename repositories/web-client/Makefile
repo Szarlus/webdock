@@ -8,26 +8,20 @@ start:
 	docker-compose start
 stop:
 	docker-compose stop
-diff:
-	diff .env.example .env
+logs:
+	docker-compose logs --timestamps --tail 25 --follow
 
 assets-builder-bash:
 	docker-compose exec assets_builder bash
 bash:
 	docker-compose exec http_server bash
-build-application: create-volumes
-	docker run \
-		--rm \
-		--volume global_npm_cache:/var/cache/npm/ \
-		--volume $(shell pwd)/image/app/:/opt/app/ \
-		--workdir /opt/app/ \
-	damlys/webdock-web-assets-builder:example \
-	npm install --unsafe-perm
+build-application:
+	docker-compose exec assets_builder npm install --unsafe-perm
 build-image:
 	docker build --no-cache --tag damlys/webdock-web-client:unreleased ./image/
 create-volumes:
 	docker volume create --name=global_npm_cache
-fix-file-permissions:
-	docker-compose exec assets_builder chown --recursive $(shell id --user):$(shell id --group) .
-logs:
-	docker-compose logs --timestamps --tail 25 --follow http_server
+download-packages: create-volumes
+	docker-compose run --rm --no-deps assets_builder npm install --ignore-scripts
+fix-file-system-permissions:
+	docker-compose exec assets_builder chown --recursive $(shell id -u):$(shell id -g) .

@@ -48,7 +48,7 @@ $ docker-machine --version
 
 [Docker Machine NFS](https://github.com/adlogix/docker-machine-nfs)
 is highly recommended to speed up transferring files between
-Docker volumes and MacOS.
+virtual machine and MacOS.
 
 ```
 $ docker-machine-nfs

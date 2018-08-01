@@ -28,9 +28,9 @@ EXPOSE 80
 ADD https://getcomposer.org/installer /usr/local/bin/composer-installer
 RUN php /usr/local/bin/composer-installer --install-dir=/usr/local/bin/ --filename=composer \
 && COMPOSER_CACHE_DIR="/var/cache/composer/" \
-&& mkdir --parents $COMPOSER_CACHE_DIR \
-&& chmod --recursive 766 $COMPOSER_CACHE_DIR \
-&& composer config --global cache-dir $COMPOSER_CACHE_DIR
+&& mkdir --parents ${COMPOSER_CACHE_DIR} \
+&& chmod --recursive 766 ${COMPOSER_CACHE_DIR} \
+&& composer config --global cache-dir ${COMPOSER_CACHE_DIR}
 
 # `apt-get` is used here to install packages required by php libraries
 RUN apt-get install --yes \
@@ -54,5 +54,3 @@ RUN apt-get install --yes \
     bamarni/symfony-console-autocomplete \
 && composer clear-cache \
 && echo "$(php ~/.composer/vendor/bin/symfony-autocomplete --shell bash composer)" > /etc/bash_completion.d/composer
-
-#CMD ["exit", "0"]

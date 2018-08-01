@@ -1,6 +1,8 @@
 {
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "*"
+  },
   "scripts": {
     "postinstall": "npm run build",
     "build": "echo 'building...'",
