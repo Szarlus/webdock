@@ -14,5 +14,3 @@ RUN apt-get install --yes \
 RUN apt-get install --yes \
     apache2-utils \
 && apt-get clean
-
-#CMD ["exit", "0"]

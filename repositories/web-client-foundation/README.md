@@ -1,25 +1,50 @@
 Web Client Foundation
 ===
 
-[Changelog](./CHANGELOG.md)
+...
 
 ## Getting started
 
-### Development
+...
 
-#### Build
-
-```
-$ docker build --no-cache --tag damlys/webdock-web-client-foundation:unreleased .
-```
-
-#### Test
-
-See test stage in the [Jenkinsfile](./Jenkinsfile.groovy).
-
-#### Release
+### Requirements
 
 ```
-$ docker tag damlys/webdock-web-client-foundation:unreleased damlys/webdock-web-client-foundation:example
-$ docker push damlys/webdock-web-client-foundation:example
+$ make --version; \
+  docker --version; \
+  docker run --rm hello-world
+```
+
+## Contributing
+
+...
+
+### Versioning
+
+[Semantic Versioning](http://semver.org/)?
+
+### Changelog
+
+[Keep a Changelog](https://keepachangelog.com/)?
+
+## Development
+
+...
+
+### Build
+
+```
+$ make build
+```
+
+### Test
+
+```
+$ make test
+```
+
+### Release
+
+```
+$ make release version=0.0.1-example
 ```

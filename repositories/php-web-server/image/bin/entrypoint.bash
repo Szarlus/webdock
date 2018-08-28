@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-print_environment_variables()
+serialize_environment_variables()
 {
     export -p | sed 's/declare -x/export/g'
 }
@@ -24,7 +24,7 @@ case "$1" in
     ;;
 
     '--start-task-scheduler')
-        print_environment_variables > /etc/cronenvs
+        serialize_environment_variables > /etc/cronenvs
         crontab /etc/crontab
         cron -f
     ;;

@@ -5,18 +5,21 @@ services:
     command: ["--start-cgi-server"]
     env_file:
       - ./../.env
+    environment:
+      - APP_CGI_WORKERS_COUNT=4
     mem_limit: 512m
     memswap_limit: 0
 
   http_server:
-    image: "damlys/webdock-php-web-server:${APP_VERSION}"
     depends_on:
       - cgi_server
+    image: "damlys/webdock-php-web-server:${APP_VERSION}"
+    env_file:
+      - ./../.env
     environment:
       - APP_CGI_SERVER_HOST=cgi_server
       - APP_CGI_SERVER_PORT=9000
-    env_file:
-      - ./../.env
+      - APP_HTTP_WORKERS_COUNT=2
     mem_limit: 32m
     memswap_limit: 0
 

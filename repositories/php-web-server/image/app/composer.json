@@ -1,21 +1,6 @@
 {
-    "require": {
-        "doctrine/doctrine-migrations-bundle": "*",
-        "doctrine/orm": "*",
-        "guzzlehttp/guzzle": "*",
-        "league/flysystem": "*",
-        "league/plates": "*",
-        "monolog/monolog": "*",
-        "php-amqplib/php-amqplib": "*",
-        "predis/predis": "*",
-        "swiftmailer/swiftmailer": "*"
-    },
+    "require": {},
     "require-dev": {
-        "behat/behat": "*",
-        "doctrine/doctrine-fixtures-bundle": "*",
-        "fzaninotto/faker": "*",
-        "mockery/mockery": "*",
-        "phpspec/phpspec": "*",
         "phpunit/phpunit": "*"
     },
     "scripts": {
@@ -29,9 +14,7 @@
             "echo 'building...'"
         ],
         "test": [
-            "phpunit",
-            "phpspec run --no-code-generation",
-            "behat --format progress"
+            "echo 'testing...'"
         ]
     }
 }

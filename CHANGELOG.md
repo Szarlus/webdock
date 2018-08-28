@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.6.1] - 2018-08-28
+
+### Added
+
+- Install `sass` inside Web Assets Builder image. 
+- Add `application_builder` service inside PHP Web Server repository.
+- Makefile to foundation repositories.
+- Multi-stage build inside Web Client repository.
+
+### Change
+
+- Rename `example` tags to `0.0.1-example`.
+
 ## [0.6.0] - 2018-08-01
 
 ### Added

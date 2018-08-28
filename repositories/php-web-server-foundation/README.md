@@ -1,25 +1,50 @@
 PHP Web Server Foundation
 ===
 
-[Changelog](./CHANGELOG.md)
+...
 
 ## Getting started
 
-### Development
+...
 
-#### Build
-
-```
-$ docker build --no-cache --tag damlys/webdock-php-web-server-foundation:unreleased .
-```
-
-#### Test
-
-See test stage in the [Jenkinsfile](./Jenkinsfile.groovy).
-
-#### Release
+### Requirements
 
 ```
-$ docker tag damlys/webdock-php-web-server-foundation:unreleased damlys/webdock-php-web-server-foundation:example
-$ docker push damlys/webdock-php-web-server-foundation:example
+$ make --version; \
+  docker --version; \
+  docker run --rm hello-world
+```
+
+## Contributing
+
+...
+
+### Versioning
+
+[Semantic Versioning](http://semver.org/)?
+
+### Changelog
+
+[Keep a Changelog](https://keepachangelog.com/)?
+
+## Development
+
+...
+
+### Build
+
+```
+$ make build
+```
+
+### Test
+
+```
+$ make test
+```
+
+### Release
+
+```
+$ make release version=0.0.1-example
 ```
