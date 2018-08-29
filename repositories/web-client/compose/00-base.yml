@@ -1,10 +1,10 @@
 version: "2"
 services:
   http_server:
-    image: "damlys/webdock-web-client:${APP_VERSION}"
+    image: "damlys/webdock-web-client:${WEBCLIENT_VERSION}"
     env_file:
       - ./../.env
     environment:
-      - APP_HTTP_WORKERS_COUNT=5
+      - WEBCLIENT_HTTP_WORKERS_COUNT=5
     mem_limit: 64m
     memswap_limit: 0

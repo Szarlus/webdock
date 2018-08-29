@@ -9,17 +9,17 @@ FROM damlys/webdock-web-client-foundation:0.0.1-example
 # has group deploy:1000
 # exposes port 80
 
-ENV APP_VERSION="undefined" \
-    APP_HTTP_WORKERS_COUNT="1" \
-    APP_HTTP_BASIC_AUTH="off" \
-    APP_HTTP_BASIC_AUTH_USER="demo" \
-    APP_HTTP_BASIC_AUTH_PASSWORD="Secret123" \
-    APP_DEFAULT_CHARSET="UTF-8" \
-    APP_DEFAULT_LOCALE="en-US" \
-    APP_DEFAULT_TIMEZONE="UTC" \
-    APP_ENVIRONMENT="prod" \
-    APP_DEBUG="off" \
-    APP_API_GATEWAY_DSN="http://username:password@127.0.0.1:80"
+ENV WEBCLIENT_VERSION="undefined" \
+    WEBCLIENT_HTTP_WORKERS_COUNT="1" \
+    WEBCLIENT_HTTP_BASIC_AUTH="off" \
+    WEBCLIENT_HTTP_BASIC_AUTH_USER="demo" \
+    WEBCLIENT_HTTP_BASIC_AUTH_PASSWORD="Secret123" \
+    WEBCLIENT_DEFAULT_CHARSET="UTF-8" \
+    WEBCLIENT_DEFAULT_LOCALE="en-US" \
+    WEBCLIENT_DEFAULT_TIMEZONE="UTC" \
+    WEBCLIENT_ENVIRONMENT="prod" \
+    WEBCLIENT_DEBUG="off" \
+    WEBCLIENT_API_GATEWAY_DSN="http://username:password@127.0.0.1:80"
 
 COPY --from=assets_builder --chown=deploy:deploy /opt/app/public/ /opt/app/public/
 COPY bin/entrypoint.bash /usr/local/bin/entrypoint

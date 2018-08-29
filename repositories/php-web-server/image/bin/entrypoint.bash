@@ -19,7 +19,7 @@ case "$1" in
 
     '--start-http-server')
         substitute_environment_variables < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
-        htpasswd -b -c /etc/nginx/htpasswd "$APP_HTTP_BASIC_AUTH_USER" "$APP_HTTP_BASIC_AUTH_PASSWORD"
+        htpasswd -b -c /etc/nginx/htpasswd "$WEBSERVER_HTTP_BASIC_AUTH_USER" "$WEBSERVER_HTTP_BASIC_AUTH_PASSWORD"
         nginx -g 'daemon off;'
     ;;
 

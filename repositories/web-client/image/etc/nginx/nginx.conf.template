@@ -4,7 +4,7 @@
 error_log /dev/stderr error;
 
 user deploy;
-worker_processes "${APP_HTTP_WORKERS_COUNT}";
+worker_processes "${WEBCLIENT_HTTP_WORKERS_COUNT}";
 
 events {
     worker_connections 1024;
@@ -17,9 +17,9 @@ http {
                     '"$http_referer" "$http_user_agent"';
     access_log /dev/stdout main;
 
-    charset "${APP_DEFAULT_CHARSET}";
+    charset "${WEBCLIENT_DEFAULT_CHARSET}";
     server_tokens off;
-    add_header X-Version "${APP_VERSION}";
+    add_header X-Version "${WEBCLIENT_VERSION}";
     expires -1;
 
     include /etc/nginx/mime.types;
@@ -32,7 +32,7 @@ http {
     client_max_body_size 1M;
     keepalive_timeout 65s;
 
-    map "${APP_HTTP_BASIC_AUTH}" $authenticable {
+    map "${WEBCLIENT_HTTP_BASIC_AUTH}" $authenticable {
         on "Restricted";
         default "off";
     }

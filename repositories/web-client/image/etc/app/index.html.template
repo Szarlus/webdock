@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="${APP_DEFAULT_LOCALE}">
+<html lang="${WEBCLIENT_DEFAULT_LOCALE}">
 <head>
-    <meta charset="${APP_DEFAULT_CHARSET}">
+    <meta charset="${WEBCLIENT_DEFAULT_CHARSET}">
 
-    <script src="/env.js?v=${APP_VERSION}"></script>
-    <script src="/app.js?v=${APP_VERSION}"></script>
+    <script src="/env.js?v=${WEBCLIENT_VERSION}"></script>
+    <script src="/app.js?v=${WEBCLIENT_VERSION}"></script>
 </head>
 <body></body>
 </html>
