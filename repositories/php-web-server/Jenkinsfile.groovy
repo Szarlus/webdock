@@ -37,7 +37,7 @@ node('slave') {
     echo "isPipelineTriggeredByPushWebhookEvent: ${isPipelineTriggeredByPushWebhookEvent().toString()}"
     echo "isPipelineTriggeredByPullRequestWebhookEvent: ${isPipelineTriggeredByPullRequestWebhookEvent().toString()}"
     echo "getVersionNumber: ${getVersionNumber().toString()}"
-    sh 'printenv'
+    sh 'printenv | sort'
     return
     sh 'sleep 1'
 // <<<
