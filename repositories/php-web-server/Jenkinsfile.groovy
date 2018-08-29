@@ -1,42 +1,26 @@
-#!/usr/bin/env groovy
-
-properties([
-    pipelineTriggers([
-        GenericTrigger(
-            causeString: 'GitHub Webhook Event',
-            token: 'job_php-web-server',
-            genericHeaderVariables: [
-                [key: 'X-GitHub-Delivery', regexpFilter: ''],
-                [key: 'X-GitHub-Event', regexpFilter: '']
-            ],
-            genericVariables: [
-                // [key: 'x_github_payload', value: '$', defaultValue: '', regexpFilter: '', expressionType: 'JSONPath']
-
-                // `push` event variables
-                // ...
-
-                // `pull_request` event variables
-                [key: 'x_github_pull_request_number', value: '$.number', defaultValue: '', regexpFilter: '', expressionType: 'JSONPath']
-            ],
-            regexpFilterExpression: '',
-            regexpFilterText: '',
-            printPostContent: false,
-            printContributedVariables: false
-        )
-    ])
-])
-
 node('slave') {
-    loginToDockerRegistry()
-
     Map scmVars = checkout(scm)
+
+    boolean isContinuousDeploymentEnabled = false
+    def docker = load 'repositories/php-web-server/automation/Docker.groovy'
+    def webhook = load 'repositories/php-web-server/automation/GitHubWebhook.groovy'
+    def version = load 'repositories/php-web-server/automation/Version.groovy'
+
+    properties([
+        pipelineTriggers([
+            webhook.getWebhookTriggerDefinition('job_php-web-server')
+        ])
+    ])
+
+    docker.loginToDockerRegistry()
+
 // >>>
-    echo "isContinuousDeploymentEnabled: ${isContinuousDeploymentEnabled().toString()}"
-    echo "isPipelineTriggeredByUser: ${isPipelineTriggeredByUser().toString()}"
-    echo "isPipelineTriggeredByAnyWebhookEvent: ${isPipelineTriggeredByAnyWebhookEvent().toString()}"
-    echo "isPipelineTriggeredByPushWebhookEvent: ${isPipelineTriggeredByPushWebhookEvent().toString()}"
-    echo "isPipelineTriggeredByPullRequestWebhookEvent: ${isPipelineTriggeredByPullRequestWebhookEvent().toString()}"
-    echo "getVersionNumber: ${getVersionNumber().toString()}"
+    echo "isContinuousDeploymentEnabled: ${isContinuousDeploymentEnabled.toString()}"
+    echo "isPipelineTriggeredByUser: ${webhook.isPipelineTriggeredByUser().toString()}"
+    echo "isPipelineTriggeredByAnyWebhookEvent: ${webhook.isPipelineTriggeredByAnyWebhookEvent().toString()}"
+    echo "isPipelineTriggeredByPushWebhookEvent: ${webhook.isPipelineTriggeredByPushWebhookEvent().toString()}"
+    echo "isPipelineTriggeredByPullRequestWebhookEvent: ${webhook.isPipelineTriggeredByPullRequestWebhookEvent().toString()}"
+    echo "getVersionNumber: ${version.getVersionNumber().toString()}"
     sh 'printenv | sort'
     return
     sh 'sleep 1'
@@ -235,7 +219,7 @@ node('slave') {
             // setup staging env...
             // deploy services to staging env...
 
-            if (!isContinuousDeploymentEnabled()) {
+            if (!isContinuousDeploymentEnabled) {
                 timeout(time: 7, unit: 'DAYS') {
                     input(
                         message: 'Project is ready to production deployment. Continue?',
@@ -247,87 +231,5 @@ node('slave') {
             // setup production env...
             // deploy services to production env...
         }
-    }
-}
-
-boolean isContinuousDeploymentEnabled() {
-    return false
-}
-
-void loginToDockerRegistry(String credentialsId = 'docker-hub-credentials', String registryServerUrl = 'https://registry.hub.docker.com') {
-    withCredentials([
-        usernamePassword(
-            credentialsId: credentialsId,
-            usernameVariable: 'USERNAME',
-            passwordVariable: 'PASSWORD'
-        )
-    ]) {
-        sh "docker login --username '${env.USERNAME}' --password '${env.PASSWORD}' '${registryServerUrl}'"
-    }
-}
-
-//boolean isDockerImageExists(String imageName, String tag) {
-//    return sh(script: "docker pull ${imageName}:${tag}", returnStatus: true) == 0
-//}
-
-//void retagDockerImage(String imageName, String currentTag, String newTag) {
-//    sh "docker tag ${imageName}:${currentTag} ${imageName}:${newTag}"
-//    sh "docker push ${imageName}:${newTag}"
-//}
-
-boolean isPipelineTriggeredByUser() {
-    return currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause) != null
-}
-
-boolean isPipelineTriggeredByAnyWebhookEvent() {
-    return currentBuild.rawBuild.getCause(org.jenkinsci.plugins.gwt.GenericCause) != null
-}
-
-boolean isPipelineTriggeredByGivenWebhookEvent(String webhookEventName) {
-    return isPipelineTriggeredByAnyWebhookEvent() && env.x_github_event == webhookEventName
-}
-
-boolean isPipelineTriggeredByPushWebhookEvent() {
-    return isPipelineTriggeredByGivenWebhookEvent('push')
-}
-
-boolean isPipelineTriggeredByPullRequestWebhookEvent() {
-    return isPipelineTriggeredByGivenWebhookEvent('pull_request')
-}
-
-void commentPullRequest(String content) {
-    if (!isPipelineTriggeredByPullRequestWebhookEvent()) {
-        error 'This pipeline is not triggered by pull request event.'
-    }
-    echo "commenting pull request... (\"${content}\")"
-}
-
-void approvePullRequest() {
-    if (!isPipelineTriggeredByPullRequestWebhookEvent()) {
-        error 'This pipeline is not triggered by pull request event.'
-    }
-    echo 'approving pull request...'
-}
-
-String getVersionNumber() {
-    String versionNumber = "0.0.${env.BUILD_NUMBER}".toString()
-//    guardVersionNumber(versionNumber)
-    return versionNumber
-}
-
-void tagGitCommit(String versionNumber) {
-    if (sh(script: "git fetch origin 'refs/tags/${versionNumber}'", returnStatus: true) == 0) {
-        echo 'Tag already exists.'
-        guardVersionNumber(versionNumber)
-    } else {
-        sh "git tag '${versionNumber}'"
-        sh "git push origin 'refs/tags/${versionNumber}'"
-    }
-}
-
-void guardVersionNumber(String versionNumber) {
-    String x = sh(script: "git rev-list --max-count=1 'refs/tags/${versionNumber}'", returnStdout: true).trim()
-    if (x != scmVars.GIT_COMMIT) {
-        error 'Tag is already assigned to another commit.'
     }
 }
