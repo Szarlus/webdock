@@ -14,18 +14,20 @@
 /*.sublime-workspace
 
 #############################
-### Docker
+### Compose
 #############################
 
 # Docker Compose environment config
-/.env
+/compose/.env
 
 #############################
-### Application
+### Image
 #############################
 
-# Package managers
+# Application package managers
 /image/app/vendor/
+# TODO lock file should be commited into VCS
+/image/app/composer.lock
 
 # Xdebug output dir
 /image/app/xdebug/*

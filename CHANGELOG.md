@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.7.0] - 2018-09-05
+
+### Changed
+
+- Make Docker Compose infrastructure and image build processes fully independent.
+
 ## [0.6.1] - 2018-08-29
 
 ### Added
@@ -16,7 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Makefile to foundation repositories.
 - Multi-stage build inside Web Client repository.
 
-### Change
+### Changed
 
 - Rename `example` tags to `0.0.1-example`.
 

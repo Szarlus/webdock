@@ -1,11 +1,12 @@
 version: "2"
 services:
   cgi_server:
-    image: "damlys/webdock-php-web-server:${WEBSERVER_VERSION}"
+    image: "damlys/webdock-php-web-server:${TAG}"
     command: ["--start-cgi-server"]
     env_file:
-      - ./../.env
+      - .env
     environment:
+      - "WEBSERVER_VERSION=${TAG}"
       - WEBSERVER_CGI_WORKERS_COUNT=4
     mem_limit: 512m
     memswap_limit: 0
@@ -13,10 +14,11 @@ services:
   http_server:
     depends_on:
       - cgi_server
-    image: "damlys/webdock-php-web-server:${WEBSERVER_VERSION}"
+    image: "damlys/webdock-php-web-server:${TAG}"
     env_file:
-      - ./../.env
+      - .env
     environment:
+      - "WEBSERVER_VERSION=${TAG}"
       - WEBSERVER_CGI_SERVER_HOST=cgi_server
       - WEBSERVER_CGI_SERVER_PORT=9000
       - WEBSERVER_HTTP_WORKERS_COUNT=2
@@ -24,18 +26,22 @@ services:
     memswap_limit: 0
 
   task_scheduler:
-    image: "damlys/webdock-php-web-server:${WEBSERVER_VERSION}"
+    image: "damlys/webdock-php-web-server:${TAG}"
     command: ["--start-task-scheduler"]
     env_file:
-      - ./../.env
+      - .env
+    environment:
+      - "WEBSERVER_VERSION=${TAG}"
     mem_limit: 128m
     memswap_limit: 0
 
   example_worker:
-    image: "damlys/webdock-php-web-server:${WEBSERVER_VERSION}"
+    image: "damlys/webdock-php-web-server:${TAG}"
     command: ["--start-example-worker"]
     restart: always
     env_file:
-      - ./../.env
+      - .env
+    environment:
+      - "WEBSERVER_VERSION=${TAG}"
     mem_limit: 64m
     memswap_limit: 0

@@ -14,7 +14,7 @@
             "echo 'building...'"
         ],
         "test": [
-            "echo 'testing...'"
+            "vendor/bin/phpunit --testsuite 'Fake Test Suite'"
         ]
     }
 }

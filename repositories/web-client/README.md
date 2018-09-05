@@ -18,9 +18,40 @@ $ make --version; \
 
 ### Prerequisites
 
+Login to Docker registry:
+
+```
+$ docker login --username damlys
+```
+
 Build and release required version of
 [Web Client Foundation](../web-client-foundation/README.md)
 and [Web Assets Builder](../web-assets-builder/README.md) image.
+
+Create volume for NPM cache:
+
+```
+$ docker volume create --name=global_npm_cache
+```
+
+## Development
+
+1. Go to `image/` directory.
+1. Build and test application.
+1. Build image.
+1. Go to `compose/` directory.
+1. Setup infrastructure.
+1. Run end-to-end tests (there is no such tests in WebDock starter).
+1. Go back to `image/` directory.
+1. Release image with version number.
+1. Tag repository with version number.
+
+## Deployment
+
+1. Checkout repository to any released version number.
+1. Go to `compose/` directory.
+1. Set released version number in `TAG` variable (in `.env` file).
+1. Setup infrastructure.
 
 ## Contributing
 
@@ -33,47 +64,3 @@ and [Web Assets Builder](../web-assets-builder/README.md) image.
 ### Changelog
 
 [Keep a Changelog](https://keepachangelog.com/)?
-
-## Runtime configuration
-
-...
-
-### Environment variables
-
-...
-
-### Certificate files
-
-...
-
-## Development
-
-...
-
-### Setup local environment
-
-```
-$ make download-packages
-$ make build-image
-$ cp .env.example .env
-$ make setup
-$ make build-application
-```
-
-Open `HTTP_SERVER_PORT` port in a web browser.
-
-### Build
-
-...
-
-### Test
-
-...
-
-### Release
-
-...
-
-## Deployment
-
-...

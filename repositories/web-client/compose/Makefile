@@ -2,7 +2,7 @@
 
 default: assets-builder-bash
 
-setup: create-volumes
+setup:
 	docker-compose up -d --remove-orphans
 start:
 	docker-compose start
@@ -15,13 +15,5 @@ assets-builder-bash:
 	docker-compose exec assets_builder bash
 bash:
 	docker-compose exec http_server bash
-build-application:
-	docker-compose exec assets_builder npm install --unsafe-perm
-build-image:
-	docker build --no-cache --tag damlys/webdock-web-client:unreleased ./image/
-create-volumes:
-	docker volume create --name=global_npm_cache
-download-packages: create-volumes
-	docker-compose run --rm --no-deps assets_builder npm install --ignore-scripts
-fix-file-system-permissions:
+fix-mounted-files-permissions:
 	docker-compose exec assets_builder chown --recursive $(shell id -u):$(shell id -g) .

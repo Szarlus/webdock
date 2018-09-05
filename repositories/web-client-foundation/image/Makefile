@@ -2,9 +2,9 @@
 
 docker_image_name=damlys/webdock-web-client-foundation
 
-define run_test
+define run
 	docker run --rm ${docker_image_name}:unreleased $(1)
-	@echo ""
+	@echo "\e[42m---\e[0m"
 endef
 
 default: bash
@@ -14,15 +14,12 @@ build:
 bash:
 	docker run --interactive --tty --rm ${docker_image_name}:unreleased bash
 test:
-	$(call run_test,curl --version)
-	$(call run_test,envsubst --version)
-	$(call run_test,nginx -v)
-	$(call run_test,which htpasswd)
-push:
-	docker tag ${docker_image_name}:unreleased ${docker_image_name}:${version}
-	docker push ${docker_image_name}:${version}
+	$(call run,curl --version)
+	$(call run,envsubst --version)
+	$(call run,nginx -v)
+	$(call run,which htpasswd)
 tag:
-	git fetch origin --tags
-	git tag ${version}
-	git push origin ${version}
+	docker tag ${docker_image_name}:unreleased ${docker_image_name}:${version}
+push:
+	docker push ${docker_image_name}:${version}
 release: tag push

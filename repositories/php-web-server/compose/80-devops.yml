@@ -31,7 +31,7 @@ services:
       - minio
     image: minio/mc:latest
     entrypoint: >
-      /bin/sh -c "
+      sh -c "
         /usr/bin/mc config host add myminioserver http://minio:9000 '${BACKING_SERVICES_USER}' '${MINIO_PASSWORD}';
         /usr/bin/mc mb myminioserver/myminiobucket;
         /usr/bin/mc policy download myminioserver/myminiobucket;
