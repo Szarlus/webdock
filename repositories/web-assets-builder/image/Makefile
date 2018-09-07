@@ -1,18 +1,18 @@
 #!/usr/bin/env make
 
-docker_image_name=damlys/webdock-web-assets-builder
+DOCKER_IMAGE_PREFIX=damlys/webdock-
 
 define run
-	docker run --rm ${docker_image_name}:unreleased $(1)
+	docker run --rm ${DOCKER_IMAGE_PREFIX}web-assets-builder:unreleased $(1)
 	@echo "\e[42m---\e[0m"
 endef
 
 default: bash
 
 build:
-	docker build --tag ${docker_image_name}:unreleased .
+	docker build --tag ${DOCKER_IMAGE_PREFIX}web-assets-builder:unreleased .
 bash:
-	docker run --interactive --tty --rm ${docker_image_name}:unreleased bash
+	docker run --interactive --tty --rm ${DOCKER_IMAGE_PREFIX}web-assets-builder:unreleased bash
 test:
 	$(call run,git --version)
 	$(call run,node --version)
@@ -22,7 +22,7 @@ test:
 	$(call run,webpack --version)
 	$(call run,webpack-cli --version)
 tag:
-	docker tag ${docker_image_name}:unreleased ${docker_image_name}:${version}
+	docker tag ${DOCKER_IMAGE_PREFIX}web-assets-builder:unreleased ${DOCKER_IMAGE_PREFIX}web-assets-builder:${version}
 push:
-	docker push ${docker_image_name}:${version}
+	docker push ${DOCKER_IMAGE_PREFIX}web-assets-builder:${version}
 release: tag push

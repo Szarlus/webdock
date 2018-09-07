@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.7.1] - 2018-09-07
+
+### Added
+
+- Add `DOCKER_IMAGE_PREFIX` variable to avoid tight connection between VSC repository and Docker registry.
+
 ## [0.7.0] - 2018-09-05
 
 ### Changed

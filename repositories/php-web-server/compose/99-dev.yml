@@ -21,7 +21,7 @@ services:
       - ./../image/app/:/opt/app/
 
   application_builder:
-    image: damlys/webdock-php-web-server-foundation:0.0.1-example
+    image: "${DOCKER_IMAGE_PREFIX}php-web-server-foundation:0.0.1-example"
     command: ["sleep", "infinity"]
     volumes:
       - global_composer_cache:/var/cache/composer/

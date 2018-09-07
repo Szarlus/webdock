@@ -7,13 +7,24 @@ RUN groupadd --gid 1000 deploy \
 RUN apt-get update
 
 RUN apt-get install --yes \
-    cron \
-&& apt-get clean \
-&& service cron stop
-
-RUN apt-get install --yes \
     git \
 && apt-get clean
+
+ADD https://getcomposer.org/installer /usr/local/bin/composer-installer
+RUN php /usr/local/bin/composer-installer --install-dir=/usr/local/bin/ --filename=composer \
+&& COMPOSER_CACHE_DIR="/var/cache/composer/" \
+&& mkdir --parents ${COMPOSER_CACHE_DIR} \
+&& chmod --recursive 766 ${COMPOSER_CACHE_DIR} \
+&& composer config --global cache-dir ${COMPOSER_CACHE_DIR}
+
+RUN apt-get install --yes \
+    bash-completion \
+&& apt-get clean \
+&& echo ". /etc/bash_completion" >> ~/.bashrc \
+&& composer global require \
+    bamarni/symfony-console-autocomplete \
+&& composer clear-cache \
+&& echo "$(php ~/.composer/vendor/bin/symfony-autocomplete --shell bash composer)" > /etc/bash_completion.d/composer
 
 # `apache2-utils` package contains `htpasswd` tool
 # `gettext` package contains `envsubst` tool
@@ -25,12 +36,10 @@ RUN apt-get install --yes \
 && service nginx stop
 EXPOSE 80
 
-ADD https://getcomposer.org/installer /usr/local/bin/composer-installer
-RUN php /usr/local/bin/composer-installer --install-dir=/usr/local/bin/ --filename=composer \
-&& COMPOSER_CACHE_DIR="/var/cache/composer/" \
-&& mkdir --parents ${COMPOSER_CACHE_DIR} \
-&& chmod --recursive 766 ${COMPOSER_CACHE_DIR} \
-&& composer config --global cache-dir ${COMPOSER_CACHE_DIR}
+RUN apt-get install --yes \
+    cron \
+&& apt-get clean \
+&& service cron stop
 
 # `apt-get` is used here to install packages required by php libraries
 RUN apt-get install --yes \
@@ -45,12 +54,3 @@ RUN apt-get install --yes \
     zip \
 && docker-php-ext-enable \
     redis
-
-RUN apt-get install --yes \
-    bash-completion \
-&& apt-get clean \
-&& echo ". /etc/bash_completion" >> ~/.bashrc \
-&& composer global require \
-    bamarni/symfony-console-autocomplete \
-&& composer clear-cache \
-&& echo "$(php ~/.composer/vendor/bin/symfony-autocomplete --shell bash composer)" > /etc/bash_completion.d/composer

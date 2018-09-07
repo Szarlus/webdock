@@ -1,4 +1,6 @@
-FROM damlys/webdock-php-web-server-foundation:0.0.1-example
+ARG DOCKER_IMAGE_PREFIX="damlys/webdock-"
+
+FROM ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:0.0.1-example
 # has user deploy:1000
 # has group deploy:1000
 # exposes port 80 and 9000

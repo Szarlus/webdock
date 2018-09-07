@@ -1,6 +1,6 @@
 #!/usr/bin/env make
 
-docker_image_name=damlys/webdock-web-client
+DOCKER_IMAGE_PREFIX=damlys/webdock-
 
 define run_assets_builder
 	docker run \
@@ -9,7 +9,7 @@ define run_assets_builder
 		--volume $(shell pwd)/app/:/opt/app/ \
 		--workdir /opt/app/ \
 		$(2) \
-	damlys/webdock-web-assets-builder:0.0.1-example \
+	${DOCKER_IMAGE_PREFIX}web-assets-builder:0.0.1-example \
 	$(1)
 	@echo "\e[42m---\e[0m"
 endef
@@ -23,16 +23,16 @@ build-appilcation:
 test-application:
 	$(call run_assets_builder,npm test)
 build: download-application-packages
-	docker build --no-cache --tag ${docker_image_name}:unreleased .
+	docker build --no-cache --tag ${DOCKER_IMAGE_PREFIX}web-client:unreleased .
 tag:
-	docker tag ${docker_image_name}:unreleased ${docker_image_name}:${version}
+	docker tag ${DOCKER_IMAGE_PREFIX}web-client:unreleased ${DOCKER_IMAGE_PREFIX}web-client:${version}
 push:
-	docker push ${docker_image_name}:${version}
+	docker push ${DOCKER_IMAGE_PREFIX}web-client:${version}
 release: tag push
 
 assets-builder-bash:
 	$(call run_assets_builder,bash,--interactive --tty)
 bash:
-	docker run --interactive --tty --rm ${docker_image_name}:unreleased bash
+	docker run --interactive --tty --rm ${DOCKER_IMAGE_PREFIX}web-client:unreleased bash
 fix-mounted-files-permissions:
 	$(call run_assets_builder,chown --recursive $(shell id -u):$(shell id -g) .)

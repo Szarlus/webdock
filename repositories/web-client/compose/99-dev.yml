@@ -5,7 +5,7 @@ services:
       - ./../image/app/public/:/opt/app/public/
 
   assets_builder:
-    image: damlys/webdock-web-assets-builder:0.0.1-example
+    image: "${DOCKER_IMAGE_PREFIX}web-assets-builder:0.0.1-example"
     command: ["sleep", "infinity"]
     volumes:
       - global_npm_cache:/var/cache/npm/

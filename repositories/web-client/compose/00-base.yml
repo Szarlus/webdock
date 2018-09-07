@@ -1,11 +1,11 @@
 version: "2"
 services:
   http_server:
-    image: "damlys/webdock-web-client:${TAG}"
+    image: "${DOCKER_IMAGE_PREFIX}web-client:${DOCKER_IMAGE_VERSION}"
     env_file:
       - .env
     environment:
-      - "WEBCLIENT_VERSION=${TAG}"
+      - "WEBCLIENT_VERSION=${DOCKER_IMAGE_VERSION}"
       - WEBCLIENT_HTTP_WORKERS_COUNT=5
     mem_limit: 64m
     memswap_limit: 0

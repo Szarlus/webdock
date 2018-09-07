@@ -1,10 +1,11 @@
-FROM damlys/webdock-web-assets-builder:0.0.1-example AS assets_builder
+ARG DOCKER_IMAGE_PREFIX="damlys/webdock-"
+
+FROM ${DOCKER_IMAGE_PREFIX}web-assets-builder:0.0.1-example AS assets_builder
 COPY app/ /opt/app/
 WORKDIR /opt/app/
 RUN npm install --unsafe-perm
 
-
-FROM damlys/webdock-web-client-foundation:0.0.1-example
+FROM ${DOCKER_IMAGE_PREFIX}web-client-foundation:0.0.1-example
 # has user deploy:1000
 # has group deploy:1000
 # exposes port 80
