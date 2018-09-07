@@ -4,6 +4,7 @@
 
 - [The Twelve-Factor App](https://12factor.net/)
 - [Role of Configuration Management in DevOps](https://www.pluralsight.com/guides/role-of-configuration-management-in-devops)
+- [Continuous Delivery](https://continuousdelivery.com/)
 
 Software versioning:
 
@@ -38,5 +39,5 @@ Jenkins:
 
 - [Pipeline](https://jenkins.io/doc/book/pipeline/)
     - [Using a Jenkinsfile](https://jenkins.io/doc/book/pipeline/jenkinsfile/)
-    - [Pipeline Syntax](https://jenkins.io/doc/book/pipeline/syntax/)
+    - [Pipeline Syntax](https://jenkins.io/doc/book/pipeline/syntax/#scripted-pipeline)
 - [Groovy Language Specification](http://groovy-lang.org/documentation.html#languagespecification)

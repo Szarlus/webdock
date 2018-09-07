@@ -35,9 +35,8 @@ File storage:
 - Beats
 - Logstash
 
-Management:
+Backing services management:
 
-- [Adminer](https://hub.docker.com/_/adminer/)
 - [mongo-express](https://hub.docker.com/_/mongo-express/)
 - [pgAdmin](https://hub.docker.com/r/dpage/pgadmin4/)
 - [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/)
@@ -47,6 +46,11 @@ Management:
 SMTP catcher:
 
 - [MailHog](https://hub.docker.com/r/mailhog/mailhog/)
+
+Logging layer:
+
+- [Fluentd](https://hub.docker.com/r/fluent/fluentd/)
+- [Fluent Bit](https://hub.docker.com/r/fluent/fluent-bit/)
 
 Automation:
 

@@ -13,8 +13,6 @@ insert_final_newline = true
 [*.feature]
 indent_size = 2
 
-[*.ini]
-
 [*.md]
 trim_trailing_whitespace = false
 

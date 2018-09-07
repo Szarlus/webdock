@@ -1,4 +1,4 @@
-node('slave') {
+node('docker.local.jenkins.slave') {
     Map scmVars = checkout(scm)
 
     boolean isContinuousDeploymentEnabled = false

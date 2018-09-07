@@ -10,51 +10,25 @@ but it is also great to work with PHP MPA.
 1. [Getting started](#getting-started)
 1. [Useful links](./Documentation/Useful-links.md)
 1. [Useful Docker images](./Documentation/Useful-Docker-images.md)
-1. [Repository structure concepts](./Documentation/Repository-structure-concepts.md)
 1. [PHP Debugging](./Documentation/PHP-Debugging.md)
 
 ## Getting started
 
 These instructions will help you use any repository from this project.
 
-### Prerequisites
+### Requirements
 
-To start working with WebDock's repositories you have to install
-[Docker Engine](https://docs.docker.com/engine/) 
-(`dockerd`; which may be [virtualized](#virtualization)), 
-Docker Client (`docker`) and 
-[Docker Compose](https://docs.docker.com/compose/) (`docker-compose`)
-software.
-
+To start working with WebDock repositories you have to install
+Docker and Docker Compose.
 This is how you can check if it is properly installed:
 
 ```
-$ docker --version
-$ docker run --rm hello-world
-$ docker-compose --version
+$ docker --version; \
+  docker run --rm hello-world; \
+  docker-compose --version
 ```
 
-#### Virtualization
-
-If you are MacOS or Windows user then you have no possibility to run
-Docker Engine daemon on your host machine. Instead of that you have to
-install [Virtualbox](https://www.virtualbox.org/) and
-[Docker Machine](https://docs.docker.com/machine/) that will run
-virtual Linux system with Docker Engine.
-
-```
-$ docker-machine --version
-```
-
-[Docker Machine NFS](https://github.com/adlogix/docker-machine-nfs)
-is highly recommended to speed up transferring files between
-virtual machine and MacOS.
-
-```
-$ docker-machine-nfs
-```
-
-#### Hosts
+### Hosts
 
 Check Docker IP with `ifconfig docker0` command  
 (`docker-machine ip` if you are working with Docker Machine).
@@ -79,13 +53,10 @@ the `/etc/hosts` file
 Copy any [repository](./repositories/) from this project to your
 own Git repository and follow it's readme file.
 
-#### Docker images registry
+### Images registry
 
-[Docker Hub](https://hub.docker.com) is an official registry for Docker images.
-You may use it or setup own private Docker registry.
-
-Note that following names are used only to visualise the relationships
-between repositories.
+Note that following images names are used only to visualise
+the relationships between repositories.
 
 ```
 damlys/webdock-web-assets-builder
@@ -95,4 +66,4 @@ damlys/webdock-php-web-server
 damlys/webdock-php-web-server-foundation
 ```
 
-You should change them immediately after repository clone.
+You should change them immediately after repositories clone.
