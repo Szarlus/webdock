@@ -26,8 +26,6 @@ node('docker.local.jenkins.slave') {
     sh 'sleep 1'
 // <<<
     dir('repositories/php-web-server') {
-//        String buildNumber
-//        String uniqueVersionNumber
         String versionNumber
         String dockerImageName = 'damlys/webdock-php-web-server'
 
