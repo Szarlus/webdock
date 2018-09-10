@@ -29,6 +29,13 @@ RUN apt-get install --yes \
 # `apache2-utils` package contains `htpasswd` tool
 # `gettext` package contains `envsubst` tool
 RUN apt-get install --yes \
+    gnupg \
+&& apt-get clean \
+&& echo 'deb http://nginx.org/packages/mainline/debian/ stretch nginx' >> /etc/apt/sources.list \
+&& curl -fsSL http://nginx.org/keys/nginx_signing.key -o /root/nginx_signing.key \
+&& apt-key add /root/nginx_signing.key \
+&& apt-get update \
+&& apt-get install --yes \
     apache2-utils \
     gettext \
     nginx \

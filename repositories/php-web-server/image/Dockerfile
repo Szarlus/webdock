@@ -50,4 +50,4 @@ ENTRYPOINT ["entrypoint"]
 CMD ["--start-http-server"]
 HEALTHCHECK --timeout=3s CMD ["healthcheck"]
 
-RUN su --command "composer install" deploy
+RUN su --command "composer install --no-interaction" deploy

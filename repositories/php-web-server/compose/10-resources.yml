@@ -2,46 +2,50 @@ version: "2"
 services:
   cgi_server:
     depends_on:
-      - minio
-      - mysql
-      - rabbitmq
-      - redis
+    - minio
+    - mysql
+    - rabbitmq
+    - redis
 
   task_scheduler:
     depends_on:
-      - minio
-      - mysql
-      - rabbitmq
-      - redis
+    - minio
+    - mysql
+    - rabbitmq
+    - redis
 
   example_worker:
     depends_on:
-      - minio
-      - mysql
-      - rabbitmq
-      - redis
+    - minio
+    - mysql
+    - rabbitmq
+    - redis
 
   minio:
     image: minio/minio:latest
     command: ["minio", "server", "/data"]
+    restart: on-failure
     environment:
-      MINIO_ACCESS_KEY: "${BACKING_SERVICES_USER}"
-      MINIO_SECRET_KEY: "${MINIO_PASSWORD}"
+    - MINIO_ACCESS_KEY=${BACKING_SERVICES_USER}
+    - MINIO_SECRET_KEY=${MINIO_PASSWORD}
 
   mysql:
     image: mysql:5
+    restart: on-failure
     environment:
-      MYSQL_ROOT_PASSWORD: "${MYSQL_PASSWORD}"
-      MYSQL_USER: "${BACKING_SERVICES_USER}"
-      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
-      MYSQL_DATABASE: "db0"
+    - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+    - MYSQL_USER=${BACKING_SERVICES_USER}
+    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    - MYSQL_DATABASE=db0
 
   rabbitmq:
     image: rabbitmq:latest
+    restart: on-failure
     environment:
-      RABBITMQ_DEFAULT_USER: "${BACKING_SERVICES_USER}"
-      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASSWORD}"
+    - RABBITMQ_DEFAULT_USER=${BACKING_SERVICES_USER}
+    - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
 
   redis:
     image: redis:latest
     command: ["--requirepass", "${REDIS_PASSWORD}"]
+    restart: on-failure

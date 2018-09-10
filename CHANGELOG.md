@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.7.2] - 2018-09-10
+
+### Added
+
+- Use official Nginx package source inside `php-web-server-foundation` image.
+- Fill in containers restart policies.
+
 ## [0.7.1] - 2018-09-07
 
 ### Added

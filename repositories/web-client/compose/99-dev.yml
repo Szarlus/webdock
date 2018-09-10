@@ -2,14 +2,14 @@ version: "2"
 services:
   http_server:
     volumes:
-      - ./../image/app/public/:/opt/app/public/
+    - ./../image/app/public/:/opt/app/public/
 
   assets_builder:
-    image: "${DOCKER_IMAGE_PREFIX}web-assets-builder:0.0.1-example"
+    image: ${DOCKER_IMAGE_PREFIX}web-assets-builder:0.0.1-example
     command: ["sleep", "infinity"]
     volumes:
-      - global_npm_cache:/var/cache/npm/
-      - ./../image/app/:/opt/app/
+    - global_npm_cache:/var/cache/npm/
+    - ./../image/app/:/opt/app/
     working_dir: /opt/app/
 
 volumes:

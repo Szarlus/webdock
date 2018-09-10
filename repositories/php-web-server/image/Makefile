@@ -17,9 +17,9 @@ endef
 default: application-builder-bash
 
 download-application-packages:
-	$(call run_application_builder,composer install --no-autoloader --no-scripts)
+	$(call run_application_builder,composer install --no-interaction --no-autoloader --no-scripts)
 build-appilcation:
-	$(call run_application_builder,composer install)
+	$(call run_application_builder,composer install --no-interaction)
 test-application:
 	$(call run_application_builder,composer test)
 build: download-application-packages
