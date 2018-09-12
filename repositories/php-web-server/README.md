@@ -49,7 +49,7 @@ $ docker volume create --name=global_composer_cache
 
 1. Checkout repository to any released version number.
 1. Go to `compose/` directory.
-1. Set released version number in `TAG` variable (in `.env` file).
+1. Set released version number in `DOCKER_IMAGE_PREFIX` variable (in `.env` file).
 1. Setup infrastructure.
 
 ## Contributing

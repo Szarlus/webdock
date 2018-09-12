@@ -28,6 +28,8 @@ services:
     environment:
     - MINIO_ACCESS_KEY=${BACKING_SERVICES_USER}
     - MINIO_SECRET_KEY=${MINIO_PASSWORD}
+    volumes:
+    - minio_data:/data
 
   mysql:
     image: mysql:5
@@ -37,6 +39,8 @@ services:
     - MYSQL_USER=${BACKING_SERVICES_USER}
     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     - MYSQL_DATABASE=db0
+    volumes:
+    - mysql_data:/var/lib/mysql
 
   rabbitmq:
     image: rabbitmq:latest
@@ -44,8 +48,18 @@ services:
     environment:
     - RABBITMQ_DEFAULT_USER=${BACKING_SERVICES_USER}
     - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+    volumes:
+    - rabbitmq_data:/var/lib/rabbitmq
 
   redis:
     image: redis:latest
     command: ["--requirepass", "${REDIS_PASSWORD}"]
     restart: on-failure
+    volumes:
+    - redis_data:/data
+
+volumes:
+  minio_data:
+  mysql_data:
+  rabbitmq_data:
+  redis_data:

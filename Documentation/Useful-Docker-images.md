@@ -55,6 +55,5 @@ Logging layer:
 Automation:
 
 - [Jenkins](https://hub.docker.com/r/jenkins/jenkins/)
-    - check also [Webdock Automation](https://github.com/damlys/webdock-automation) starter :-)
 
 [rabbitmq]: https://hub.docker.com/_/rabbitmq/
