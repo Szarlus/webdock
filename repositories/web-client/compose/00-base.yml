@@ -1,6 +1,8 @@
 version: "2"
 services:
   http_server:
+    depends_on:
+    - fluent_forwarder
     image: ${DOCKER_IMAGE_PREFIX}web-client:${DOCKER_IMAGE_VERSION}
     restart: on-failure
     env_file:
@@ -10,3 +12,25 @@ services:
     - WEBCLIENT_HTTP_WORKERS_COUNT=5
     mem_limit: 64m
     memswap_limit: 0
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
+
+  fluent_forwarder:
+    image: ${DOCKER_IMAGE_PREFIX}fluent-forwarder:0.0.1-example
+    restart: on-failure
+    environment:
+    - FF_SHARED_SECRET
+    - FF_FLUENT_COLLECTOR_HOST
+    - FF_FLUENT_COLLECTOR_PORT
+    - FF_METADATA_VERSION=${DOCKER_IMAGE_VERSION}
+    networks:
+    - default
+    - logging_tier
+    ports:
+    - 127.0.0.1:${FLUENT_FORWARDER_PORT}:24224
+
+networks:
+  logging_tier:
+    external: true

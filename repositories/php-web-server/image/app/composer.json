@@ -1,5 +1,7 @@
 {
-    "require": {},
+    "require": {
+        "monolog/monolog": "*"
+    },
     "require-dev": {
         "phpunit/phpunit": "*"
     },

@@ -1,6 +1,6 @@
 #!/usr/bin/env make
 
-default: jenkins-master-bash
+default: logs
 
 prepare-env:
 	sudo mkdir --parents /var/jenkins/master/workspace/

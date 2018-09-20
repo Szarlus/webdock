@@ -56,8 +56,8 @@ RUN apt-get install --yes \
     redis \
 && pecl clear-cache \
 && docker-php-ext-install \
-    pdo_mysql \
     opcache \
+    pdo_mysql \
     zip \
 && docker-php-ext-enable \
     redis

@@ -11,17 +11,22 @@ HTTP server:
 
 AMQP server:
 
-- [RabbitMQ][rabbitmq]
+- [RabbitMQ](https://hub.docker.com/_/rabbitmq/)
+    - see also `management` tag
 
 Data storage:
 
 - [MongoDB](https://hub.docker.com/_/mongo/)
+    - [mongo-express](https://hub.docker.com/_/mongo-express/)
 - [MySQL](https://hub.docker.com/_/mysql/)
+    - [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/)
 - [Postgres](https://hub.docker.com/_/postgres/)
+    - [pgAdmin](https://hub.docker.com/r/dpage/pgadmin4/)
 
 In-memory storage:    
     
 - [Redis](https://hub.docker.com/_/redis/)
+    - [Redis Commander](https://hub.docker.com/r/rediscommander/redis-commander/)
 
 File storage:
 
@@ -31,17 +36,7 @@ File storage:
 [Elastic stack](https://www.docker.elastic.co/):
 
 - Elasticsearch
-- Kibana
-- Beats
-- Logstash
-
-Backing services management:
-
-- [mongo-express](https://hub.docker.com/_/mongo-express/)
-- [pgAdmin](https://hub.docker.com/r/dpage/pgadmin4/)
-- [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/)
-- [Redis Commander](https://hub.docker.com/r/rediscommander/redis-commander/)
-- see also `management` tag of the [RabbitMQ][rabbitmq] image
+    - Kibana
 
 SMTP catcher:
 
@@ -52,8 +47,7 @@ Logging layer:
 - [Fluentd](https://hub.docker.com/r/fluent/fluentd/)
 - [Fluent Bit](https://hub.docker.com/r/fluent/fluent-bit/)
 
-Automation:
+Automation layer:
 
 - [Jenkins](https://hub.docker.com/r/jenkins/jenkins/)
-
-[rabbitmq]: https://hub.docker.com/_/rabbitmq/
+- [Jenkins JNLP Agent](https://hub.docker.com/r/jenkins/jnlp-slave/)

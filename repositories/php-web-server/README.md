@@ -27,6 +27,12 @@ $ docker login --username damlys
 Build and release required version of
 [PHP Web Server Foundation](../php-web-server-foundation/README.md) image.
 
+Create network for Fluent logging:
+
+```
+$ docker network create logging_tier
+```
+
 Create volume for Composer cache:
 
 ```

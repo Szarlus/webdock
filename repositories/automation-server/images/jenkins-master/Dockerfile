@@ -1,9 +1,8 @@
 # https://github.com/jenkinsci/docker/blob/master/Dockerfile
-FROM jenkins/jenkins:2.121.3
+FROM jenkins/jenkins:latest
 # has user jenkins:1000
 # has group jenkins:1000
-# exposes port 8080
-# exposes port 50000
+# exposes port 8080 and 50000
 
 USER root
 

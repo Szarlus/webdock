@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-      - FROM=${DOCKER_IMAGE_PREFIX}automation-jenkins-master:${DOCKER_IMAGE_VERSION}
+      - FROM=${DOCKER_IMAGE_PREFIX}jenkins-master:${DOCKER_IMAGE_VERSION}
       - DOCKER_GID=${HOST_DOCKER_GID}
     image: ${COMPOSE_PROJECT_NAME}_jenkins_master:${DOCKER_IMAGE_VERSION}
     restart: on-failure
@@ -18,14 +18,14 @@ services:
     - /var/jenkins/:/var/jenkins/
     working_dir: /var/jenkins/master/
     ports:
-    - ${JENKINS_PORT}:8080
+    - ${JENKINS_DASHBOARD_PORT}:8080
 
   jenkins_slave:
     build:
       context: .
       dockerfile: Dockerfile
       args:
-      - FROM=${DOCKER_IMAGE_PREFIX}automation-jenkins-slave:${DOCKER_IMAGE_VERSION}
+      - FROM=${DOCKER_IMAGE_PREFIX}jenkins-slave:${DOCKER_IMAGE_VERSION}
       - DOCKER_GID=${HOST_DOCKER_GID}
     image: ${COMPOSE_PROJECT_NAME}_jenkins_slave:${DOCKER_IMAGE_VERSION}
     restart: on-failure

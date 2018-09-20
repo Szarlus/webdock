@@ -22,6 +22,8 @@ services:
     - redis
 
   minio:
+    depends_on:
+    - fluent_forwarder
     image: minio/minio:latest
     command: ["minio", "server", "/data"]
     restart: on-failure
@@ -30,8 +32,32 @@ services:
     - MINIO_SECRET_KEY=${MINIO_PASSWORD}
     volumes:
     - minio_data:/data
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
+
+  minio_constructor:
+    depends_on:
+    - fluent_forwarder
+    - minio
+    image: minio/mc:latest
+    entrypoint: >
+      sh -c "
+        /usr/bin/mc config host add myminioserver http://minio:9000 '${BACKING_SERVICES_USER}' '${MINIO_PASSWORD}';
+        /usr/bin/mc mb myminioserver/myminiobucket;
+        /usr/bin/mc policy download myminioserver/myminiobucket;
+        exit 0
+      "
+    restart: on-failure
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
 
   mysql:
+    depends_on:
+    - fluent_forwarder
     image: mysql:5
     restart: on-failure
     environment:
@@ -41,8 +67,14 @@ services:
     - MYSQL_DATABASE=db0
     volumes:
     - mysql_data:/var/lib/mysql
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
 
   rabbitmq:
+    depends_on:
+    - fluent_forwarder
     image: rabbitmq:latest
     restart: on-failure
     environment:
@@ -50,16 +82,33 @@ services:
     - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
     volumes:
     - rabbitmq_data:/var/lib/rabbitmq
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
 
   redis:
+    depends_on:
+    - fluent_forwarder
     image: redis:latest
     command: ["--requirepass", "${REDIS_PASSWORD}"]
     restart: on-failure
     volumes:
     - redis_data:/data
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
 
 volumes:
   minio_data:
+    driver: local
+
   mysql_data:
+    driver: local
+
   rabbitmq_data:
+    driver: local
+
   redis_data:
+    driver: local

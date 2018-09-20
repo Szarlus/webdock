@@ -1,4 +1,4 @@
-Web Client
+Logs Collector
 ===
 
 ...
@@ -24,32 +24,17 @@ Login to Docker registry:
 $ docker login --username damlys
 ```
 
-Build and release required version of
-[Web Client Foundation](../web-client-foundation/README.md)
-and [Web Assets Builder](../web-assets-builder/README.md) image.
-
 Create network for Fluent logging:
 
 ```
 $ docker network create logging_tier
 ```
 
-Create volume for NPM cache:
-
-```
-$ docker volume create --name=global_npm_cache
-```
-
 ## Development
 
 1. Go to `image/` directory.
-1. Build and test application.
-1. Build image.
-1. Go to `compose/` directory.
-1. Setup infrastructure.
-1. Run end-to-end tests (there is no such tests in WebDock starter).
-1. Go back to `image/` directory.
-1. Release image with version number.
+1. Build images.
+1. Release images with version number.
 1. Tag repository with version number.
 
 ## Deployment

@@ -13,6 +13,8 @@ services:
     - mailhog
 
   mailhog:
+    depends_on:
+    - fluent_forwarder
     image: mailhog/mailhog:latest
     entrypoint: >
       sh -c "
@@ -22,23 +24,14 @@ services:
     restart: on-failure
     ports:
     - ${MAILHOG_PORT}:8025
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
 
   minio:
     ports:
     - ${MINIO_PORT}:9000
-
-  minio_constructor:
-    depends_on:
-    - minio
-    image: minio/mc:latest
-    entrypoint: >
-      sh -c "
-        /usr/bin/mc config host add myminioserver http://minio:9000 '${BACKING_SERVICES_USER}' '${MINIO_PASSWORD}';
-        /usr/bin/mc mb myminioserver/myminiobucket;
-        /usr/bin/mc policy download myminioserver/myminiobucket;
-        exit 0
-      "
-    restart: on-failure
 
   mysql:
     ports:
@@ -46,6 +39,7 @@ services:
 
   phpmyadmin:
     depends_on:
+    - fluent_forwarder
     - mysql
     image: phpmyadmin/phpmyadmin:latest
     restart: on-failure
@@ -54,6 +48,10 @@ services:
     - PMA_PORT=3306
     ports:
     - ${PHPMYADMIN_PORT}:80
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
 
   rabbitmq:
     image: rabbitmq:management
@@ -62,6 +60,7 @@ services:
 
   redis_commander:
     depends_on:
+    - fluent_forwarder
     - redis
     image: rediscommander/redis-commander:latest
     restart: on-failure
@@ -71,3 +70,7 @@ services:
     - REDIS_HOSTS=session:redis:6379:0:${REDIS_PASSWORD},cache:redis:6379:1:${REDIS_PASSWORD}
     ports:
     - ${REDIS_COMMANDER_PORT}:8081
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}

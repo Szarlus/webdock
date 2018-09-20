@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.7.4] - 2018-09-20
+
+### Added
+
+- Logs collecting with Fluentd and MongoDB.
+
 ## [0.7.3] - 2018-09-12
 
 ### Added

@@ -1,4 +1,4 @@
-FROM jenkins/jnlp-slave:3.23-1
+FROM jenkins/jnlp-slave:latest
 # has user jenkins:10000
 # has group jenkins:10000
 
