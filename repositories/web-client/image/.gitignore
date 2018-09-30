@@ -1,0 +1,7 @@
+# Package managers
+/app/node_modules/
+/app/package-lock.json
+
+# Files generated during container startup
+/app/public/env.js
+/app/public/index.html

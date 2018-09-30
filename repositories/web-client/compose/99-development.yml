@@ -5,18 +5,14 @@ services:
     - ./../image/app/public/:/opt/app/public/
 
   assets_builder:
-    depends_on:
-    - fluent_forwarder
     image: ${DOCKER_IMAGE_PREFIX}web-assets-builder:0.0.1-example
     command: ["sleep", "infinity"]
     volumes:
     - global_npm_cache:/var/cache/npm/
     - ./../image/app/:/opt/app/
     working_dir: /opt/app/
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
+    labels:
+    - version=${DOCKER_IMAGE_VERSION}
 
 volumes:
   global_npm_cache:

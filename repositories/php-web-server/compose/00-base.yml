@@ -1,8 +1,6 @@
 version: "2"
 services:
   cgi_server:
-    depends_on:
-    - fluent_forwarder
     image: ${DOCKER_IMAGE_PREFIX}php-web-server:${DOCKER_IMAGE_VERSION}
     command: ["--start-cgi-server"]
     restart: on-failure
@@ -10,18 +8,15 @@ services:
     - .env
     environment:
     - WEBSERVER_VERSION=${DOCKER_IMAGE_VERSION}
-    - WEBSERVER_CGI_WORKERS_COUNT=4
-    mem_limit: 512m
+    - WEBSERVER_CGI_WORKERS_COUNT=5
+    mem_limit: 256m
     memswap_limit: 0
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
+    labels:
+    - version=${DOCKER_IMAGE_VERSION}
 
   http_server:
     depends_on:
     - cgi_server
-    - fluent_forwarder
     image: ${DOCKER_IMAGE_PREFIX}php-web-server:${DOCKER_IMAGE_VERSION}
     restart: on-failure
     env_file:
@@ -30,17 +25,13 @@ services:
     - WEBSERVER_VERSION=${DOCKER_IMAGE_VERSION}
     - WEBSERVER_CGI_SERVER_HOST=cgi_server
     - WEBSERVER_CGI_SERVER_PORT=9000
-    - WEBSERVER_HTTP_WORKERS_COUNT=2
-    mem_limit: 32m
+    - WEBSERVER_HTTP_WORKERS_COUNT=5
+    mem_limit: 64m
     memswap_limit: 0
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
+    labels:
+    - version=${DOCKER_IMAGE_VERSION}
 
   task_scheduler:
-    depends_on:
-    - fluent_forwarder
     image: ${DOCKER_IMAGE_PREFIX}php-web-server:${DOCKER_IMAGE_VERSION}
     command: ["--start-task-scheduler"]
     restart: on-failure
@@ -48,16 +39,12 @@ services:
     - .env
     environment:
     - WEBSERVER_VERSION=${DOCKER_IMAGE_VERSION}
-    mem_limit: 128m
+    mem_limit: 64m
     memswap_limit: 0
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
+    labels:
+    - version=${DOCKER_IMAGE_VERSION}
 
   example_worker:
-    depends_on:
-    - fluent_forwarder
     image: ${DOCKER_IMAGE_PREFIX}php-web-server:${DOCKER_IMAGE_VERSION}
     command: ["--start-example-worker"]
     restart: always
@@ -67,25 +54,5 @@ services:
     - WEBSERVER_VERSION=${DOCKER_IMAGE_VERSION}
     mem_limit: 64m
     memswap_limit: 0
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: 127.0.0.1:${FLUENT_FORWARDER_PORT}
-
-  fluent_forwarder:
-    image: ${DOCKER_IMAGE_PREFIX}fluent-forwarder:0.0.1-example
-    restart: on-failure
-    environment:
-    - FF_SHARED_SECRET
-    - FF_FLUENT_COLLECTOR_HOST
-    - FF_FLUENT_COLLECTOR_PORT
-    - FF_METADATA_VERSION=${DOCKER_IMAGE_VERSION}
-    networks:
-    - default
-    - logging_tier
-    ports:
-    - 127.0.0.1:${FLUENT_FORWARDER_PORT}:24224
-
-networks:
-  logging_tier:
-    external: true
+    labels:
+    - version=${DOCKER_IMAGE_VERSION}

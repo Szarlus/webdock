@@ -1,0 +1,7 @@
+# Package managers
+/app/vendor/
+/app/composer.lock
+
+# Xdebug output
+/app/xdebug/*
+!/app/xdebug/.gitkeep

@@ -26,9 +26,9 @@ $ docker login --username damlys
 ## Development
 
 1. Go to `image/` directory.
-1. Build image.
-1. Test image.
-1. Release image with version number.
+    1. Build image.
+    1. Test image.
+    1. Release image with version number.
 1. Tag repository with version number.
 
 ## Contributing

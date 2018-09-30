@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.7.5] - 2018-09-30
+
+### Added
+
+- Monitoring Stack repository.
+
+### Changed
+
+- Rename Makefile `bash` target to `shell`.
+- Make every image in each repository independent.
+
+### Removed
+
+- Loggers from application's Docker Compose files.
+
 ## [0.7.4] - 2018-09-20
 
 ### Added

@@ -12,23 +12,3 @@
 /.idea/
 /*.sublime-project
 /*.sublime-workspace
-
-#############################
-### Compose
-#############################
-
-# Docker Compose environment config
-/compose/.env
-
-#############################
-### Image
-#############################
-
-# Application package managers
-/image/app/node_modules/
-# TODO lock file should be commited into VCS
-/image/app/package-lock.json
-
-# Files generated during container startup
-/image/app/public/env.js
-/image/app/public/index.html

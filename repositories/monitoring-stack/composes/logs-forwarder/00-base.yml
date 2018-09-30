@@ -1,0 +1,22 @@
+version: "2"
+services:
+  fluent_forwarder:
+    image: ${DOCKER_IMAGE_PREFIX}fluent-forwarder:${DOCKER_IMAGE_VERSION}
+    restart: always
+    environment:
+    - FF_SHARED_SECRET
+    - FF_FLUENT_COLLECTOR_HOST
+    - FF_FLUENT_COLLECTOR_PORT
+    mem_limit: 128m
+    memswap_limit: 0
+    networks:
+    - default
+    - monitoring_tier
+    ports:
+    - 127.0.0.1:${FLUENT_FORWARDER_PORT}:24224
+    labels:
+    - version=${DOCKER_IMAGE_VERSION}
+
+networks:
+  monitoring_tier:
+    external: true

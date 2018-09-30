@@ -1,18 +1,20 @@
 #!/usr/bin/env make
 
 DOCKER_IMAGE_PREFIX=damlys/webdock-
+draftVersion=unreleased
+version=latest
 
 define run
-	docker run --rm ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:unreleased $(1)
+	docker run --rm ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:${draftVersion} $(1)
 	@echo "\e[42m---\e[0m"
 endef
 
-default: bash
+default: shell
 
 build:
-	docker build --tag ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:unreleased .
-bash:
-	docker run --interactive --tty --rm ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:unreleased bash
+	docker build --tag ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:${draftVersion} .
+shell:
+	docker run --interactive --tty --rm ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:${draftVersion} bash
 test:
 	$(call run,bash -c "dpkg --status cron | grep 'Version'")
 	$(call run,composer --version)
@@ -27,7 +29,7 @@ test:
 	$(call run,which crontab)
 	$(call run,which htpasswd)
 tag:
-	docker tag ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:unreleased ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:${version}
+	docker tag ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:${draftVersion} ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:${version}
 push:
 	docker push ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:${version}
 release: tag push
