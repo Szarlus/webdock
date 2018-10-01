@@ -14,7 +14,6 @@ case "$1" in
         substitute_environment_variables < /etc/opt/app/index.html.template > /opt/app/public/index.html
 
         substitute_environment_variables < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
-        htpasswd -b -c /etc/nginx/htpasswd "$WEBCLIENT_HTTP_BASIC_AUTH_USER" "$WEBCLIENT_HTTP_BASIC_AUTH_PASSWORD"
         nginx -g 'daemon off;'
     ;;
 

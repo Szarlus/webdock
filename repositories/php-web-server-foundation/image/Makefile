@@ -27,7 +27,6 @@ test:
 	$(call run,php-fpm --version)
 	$(call run,which cron)
 	$(call run,which crontab)
-	$(call run,which htpasswd)
 tag:
 	docker tag ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:${draftVersion} ${DOCKER_IMAGE_PREFIX}php-web-server-foundation:${version}
 push:

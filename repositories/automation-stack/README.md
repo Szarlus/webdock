@@ -49,7 +49,7 @@ $ docker login --username damlys
 1. Go to `images/` directory. For each image:
     1. Build image.
     1. Test image.
-1. Go to `compose/` directory.
+1. Go to `composes/automation-server/` directory.
     1. Setup infrastructure.
     1. Test infrastructure.
 1. Go back to `images/` directory. For each image:
@@ -59,7 +59,7 @@ $ docker login --username damlys
 ## Deployment
 
 1. Checkout repository to any released version number.
-1. Go to `compose/` directory.
+1. Go to `composes/automation-server/` directory.
     1. Set released version number in `DOCKER_IMAGE_VERSION` variable (in `.env` file).
     1. Setup infrastructure.
 

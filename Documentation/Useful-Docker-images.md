@@ -42,7 +42,7 @@ SMTP catcher:
 
 - [MailHog](https://hub.docker.com/r/mailhog/mailhog/)
 
-Logging layer:
+Monitoring layer:
 
 - [Fluentd](https://hub.docker.com/r/fluent/fluentd/)
 - [Fluent Bit](https://hub.docker.com/r/fluent/fluent-bit/)

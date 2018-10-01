@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.7.6] - 2018-10-01
+
+### Added
+
+- Group parsed json logs under `parsed_json_log` key.
+
+### Changed
+
+- Move Jenkins infrastructure to `composes/automation-server/` directory.
+- Divide `90-operations.yml` into `21-management.yml` and `90-mocks.yml`.
+
+### Removed
+
+- HTTP basic auth from `php-web-server` and `web-client` applications.
+
 ## [0.7.5] - 2018-09-30
 
 ### Added

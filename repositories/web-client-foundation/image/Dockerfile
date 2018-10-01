@@ -9,8 +9,3 @@ RUN apt-get update
 RUN apt-get install --yes \
     curl \
 && apt-get clean
-
-# `apache2-utils` package contains `htpasswd` tool
-RUN apt-get install --yes \
-    apache2-utils \
-&& apt-get clean

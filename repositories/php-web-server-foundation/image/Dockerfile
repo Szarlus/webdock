@@ -26,7 +26,6 @@ RUN apt-get install --yes \
 && composer clear-cache \
 && echo "$(php ~/.composer/vendor/bin/symfony-autocomplete --shell bash composer)" > /etc/bash_completion.d/composer
 
-# `apache2-utils` package contains `htpasswd` tool
 # `gettext` package contains `envsubst` tool
 RUN apt-get install --yes \
     gnupg \
@@ -36,7 +35,6 @@ RUN apt-get install --yes \
 && apt-key add /root/nginx_signing.key \
 && apt-get update \
 && apt-get install --yes \
-    apache2-utils \
     gettext \
     nginx \
 && apt-get clean \

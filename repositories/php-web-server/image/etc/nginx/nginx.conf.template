@@ -41,13 +41,6 @@ http {
     client_max_body_size 21M;
     keepalive_timeout 65s;
 
-    map "${WEBSERVER_HTTP_BASIC_AUTH}" $authenticable {
-        on "Restricted";
-        default "off";
-    }
-    auth_basic $authenticable;
-    auth_basic_user_file /etc/nginx/htpasswd;
-
     server {
         listen 80 default_server;
         listen [::]:80 default_server;

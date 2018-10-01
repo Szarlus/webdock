@@ -6,9 +6,14 @@
 
 ...
 
-### Setup
+### Prerequisites
 
 ```
 $ cp .env.example .env
+```
+
+### Setup
+
+```
 $ make setup
 ```

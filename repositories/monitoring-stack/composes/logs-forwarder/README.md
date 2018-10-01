@@ -6,7 +6,7 @@
 
 ...
 
-### Setup
+### Requirements
 
 ```
 $ cat /etc/docker/daemon.json
@@ -24,7 +24,14 @@ $ cat /etc/docker/daemon.json
 $ sudo service docker restart
 ```
 
+### Prerequisites
+
 ```
 $ cp .env.example .env
+```
+
+### Setup
+
+```
 $ make setup
 ```

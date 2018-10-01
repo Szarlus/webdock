@@ -1,30 +1,5 @@
 version: "2"
 services:
-  cgi_server:
-    depends_on:
-    - mailhog
-
-  task_scheduler:
-    depends_on:
-    - mailhog
-
-  example_worker:
-    depends_on:
-    - mailhog
-
-  mailhog:
-    image: mailhog/mailhog:latest
-    entrypoint: >
-      sh -c "
-        echo \"${BACKING_SERVICES_USER}:$$(MailHog bcrypt '${MAILHOG_PASSWORD}')\" > /home/mailhog/htpasswd;
-        MailHog -auth-file=/home/mailhog/htpasswd
-      "
-    restart: on-failure
-    ports:
-    - ${MAILHOG_PORT}:8025
-    labels:
-    - version=${DOCKER_IMAGE_VERSION}
-
   minio:
     ports:
     - ${MINIO_PORT}:9000

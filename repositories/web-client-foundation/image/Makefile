@@ -19,7 +19,6 @@ test:
 	$(call run,curl --version)
 	$(call run,envsubst --version)
 	$(call run,nginx -v)
-	$(call run,which htpasswd)
 tag:
 	docker tag ${DOCKER_IMAGE_PREFIX}web-client-foundation:${draftVersion} ${DOCKER_IMAGE_PREFIX}web-client-foundation:${version}
 push:

@@ -1,6 +1,8 @@
 version: "2"
 services:
   fluent_collector:
+    depends_on:
+    - mongo
     image: ${DOCKER_IMAGE_PREFIX}fluent-collector:${DOCKER_IMAGE_VERSION}
     restart: on-failure
     environment:
