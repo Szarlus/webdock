@@ -1,5 +1,10 @@
 version: "2"
 services:
+  migrator:
+    volumes:
+    - global_composer_cache:/var/cache/composer/
+    - ./../image/app/:/opt/app/
+
   cgi_server:
     volumes:
     - global_composer_cache:/var/cache/composer/

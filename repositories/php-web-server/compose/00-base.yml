@@ -1,6 +1,21 @@
 version: "2"
 services:
+  migrator:
+    image: ${DOCKER_IMAGE_PREFIX}php-web-server:${DOCKER_IMAGE_VERSION}
+    command: ["--start-migrator"]
+    restart: "no"
+    env_file:
+    - .env
+    environment:
+    - WEBSERVER_VERSION=${DOCKER_IMAGE_VERSION}
+    mem_limit: 256m
+    memswap_limit: 0
+    labels:
+    - version=${DOCKER_IMAGE_VERSION}
+
   cgi_server:
+    depends_on:
+    - migrator
     image: ${DOCKER_IMAGE_PREFIX}php-web-server:${DOCKER_IMAGE_VERSION}
     command: ["--start-cgi-server"]
     restart: on-failure
@@ -17,6 +32,7 @@ services:
   http_server:
     depends_on:
     - cgi_server
+    - migrator
     image: ${DOCKER_IMAGE_PREFIX}php-web-server:${DOCKER_IMAGE_VERSION}
     restart: on-failure
     env_file:
@@ -32,6 +48,8 @@ services:
     - version=${DOCKER_IMAGE_VERSION}
 
   task_scheduler:
+    depends_on:
+    - migrator
     image: ${DOCKER_IMAGE_PREFIX}php-web-server:${DOCKER_IMAGE_VERSION}
     command: ["--start-task-scheduler"]
     restart: on-failure
@@ -45,6 +63,8 @@ services:
     - version=${DOCKER_IMAGE_VERSION}
 
   example_worker:
+    depends_on:
+    - migrator
     image: ${DOCKER_IMAGE_PREFIX}php-web-server:${DOCKER_IMAGE_VERSION}
     command: ["--start-example-worker"]
     restart: always

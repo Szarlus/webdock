@@ -1,5 +1,9 @@
 version: "2"
 services:
+  migrator:
+    depends_on:
+    - mailhog
+
   cgi_server:
     depends_on:
     - mailhog

@@ -1,5 +1,12 @@
 version: "2"
 services:
+  migrator:
+    depends_on:
+    - minio
+    - mysql
+    - rabbitmq
+    - redis
+
   cgi_server:
     depends_on:
     - minio

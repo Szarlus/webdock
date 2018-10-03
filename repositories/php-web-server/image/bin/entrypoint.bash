@@ -13,6 +13,10 @@ set -e
 
 echo "$1" > /run/docker-entrypoint-command.txt
 case "$1" in
+    '--start-migrator')
+        su --command "echo 'migrating...'" deploy
+    ;;
+
     '--start-cgi-server')
         php-fpm --nodaemonize
     ;;

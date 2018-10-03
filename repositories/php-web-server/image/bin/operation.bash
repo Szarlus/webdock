@@ -9,10 +9,6 @@ case $1 in
         chmod a+w /opt/app/xdebug/
     ;;
 
-    '--migrate')
-        su --command "echo 'migrating...'" deploy
-    ;;
-
     *)
         echo 'Undefined operation.'
         exit 127
