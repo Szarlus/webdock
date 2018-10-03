@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Migrator service inside `php-web-server` repository.
 - Missing memory and CPU limits for Compose services.
+- MongoDB and PostgreSQL services.
 
 ### Removed
 

@@ -3,28 +3,36 @@ services:
   migrator:
     depends_on:
     - minio
+    - mongo
     - mysql
+    - postgres
     - rabbitmq
     - redis
 
   cgi_server:
     depends_on:
     - minio
+    - mongo
     - mysql
+    - postgres
     - rabbitmq
     - redis
 
   task_scheduler:
     depends_on:
     - minio
+    - mongo
     - mysql
+    - postgres
     - rabbitmq
     - redis
 
   example_worker:
     depends_on:
     - minio
+    - mongo
     - mysql
+    - postgres
     - rabbitmq
     - redis
 
@@ -61,16 +69,46 @@ services:
     labels:
     - version=${DOCKER_IMAGE_VERSION}
 
+  mongo:
+    image: mongo:latest
+    restart: on-failure
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=${BACKING_SERVICES_USER}
+    - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    volumes:
+    - mongo_config:/data/configdb
+    - mongo_data:/data/db
+    cpu_shares: 1024
+    mem_limit: 1gb
+    memswap_limit: 0
+    labels:
+    - version=${DOCKER_IMAGE_VERSION}
+
   mysql:
     image: mysql:5
     restart: on-failure
     environment:
     - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
     - MYSQL_USER=${BACKING_SERVICES_USER}
-    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    - MYSQL_PASSWORD
     - MYSQL_DATABASE=db0
     volumes:
     - mysql_data:/var/lib/mysql
+    cpu_shares: 1024
+    mem_limit: 1gb
+    memswap_limit: 0
+    labels:
+    - version=${DOCKER_IMAGE_VERSION}
+
+  postgres:
+    image: postgres:latest
+    restart: on-failure
+    environment:
+    - POSTGRES_USER=${BACKING_SERVICES_USER}
+    - POSTGRES_PASSWORD
+    - POSTGRES_DB=db0
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
     cpu_shares: 1024
     mem_limit: 1gb
     memswap_limit: 0
@@ -107,7 +145,16 @@ volumes:
   minio_data:
     driver: local
 
+  mongo_config:
+    driver: local
+
+  mongo_data:
+    driver: local
+
   mysql_data:
+    driver: local
+
+  postgres_data:
     driver: local
 
   rabbitmq_data:

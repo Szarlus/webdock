@@ -4,9 +4,43 @@ services:
     ports:
     - ${MINIO_PORT}:9000
 
-  mysql:
+  mongo_express:
+    depends_on:
+    - mongo
+    image: mongo-express:latest
+    restart: on-failure
+    environment:
+    - ME_CONFIG_MONGODB_SERVER=mongo
+    - ME_CONFIG_MONGODB_PORT=27017
+    - ME_CONFIG_MONGODB_ADMINUSERNAME=${BACKING_SERVICES_USER}
+    - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_PASSWORD}
+    - ME_CONFIG_BASICAUTH_USERNAME=${BACKING_SERVICES_USER}
+    - ME_CONFIG_BASICAUTH_PASSWORD=${MONGO_EXPRESS_PASSWORD}
     ports:
-    - ${MYSQL_PORT}:3306
+    - ${MONGO_EXPRESS_PORT}:8081
+    cpu_shares: 256
+    mem_limit: 1gb
+    memswap_limit: 0
+    labels:
+    - version=${DOCKER_IMAGE_VERSION}
+
+  pgadmin:
+    depends_on:
+    - postgres
+    image: dpage/pgadmin4:latest
+    restart: on-failure
+    environment:
+    - PGADMIN_DEFAULT_EMAIL=${BACKING_SERVICES_USER}
+    - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+    - "${PGADMIN_PORT}:80"
+    volumes:
+    - pgadmin_config:/var/lib/pgadmin
+    cpu_shares: 256
+    mem_limit: 1gb
+    memswap_limit: 0
+    labels:
+    - version=${DOCKER_IMAGE_VERSION}
 
   phpmyadmin:
     depends_on:
@@ -45,3 +79,7 @@ services:
     memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
+
+volumes:
+  pgadmin_config:
+    driver: local
