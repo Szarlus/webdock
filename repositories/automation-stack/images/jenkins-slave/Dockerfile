@@ -24,27 +24,18 @@ RUN COMPOSE_VERSION="1.22.0" \
 && chmod a+rx /usr/local/bin/docker-compose
 
 # kubectl (https://storage.googleapis.com/kubernetes-release/release/stable.txt)
-RUN KUBERNETES_VERSION="1.11.2" \
+RUN KUBERNETES_VERSION="1.12.0" \
 && curl -fsSL https://storage.googleapis.com/kubernetes-release/release/v${KUBERNETES_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl \
 && chmod a+rx /usr/local/bin/kubectl
 
 # helm (https://github.com/kubernetes/helm/releases)
-RUN HELM_VERSION="2.10.0" \
+RUN HELM_VERSION="2.11.0" \
 && mkdir -p /var/tmp/helm-setup/ \
 && curl -fsSL https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o /var/tmp/helm-setup/archive.tar.gz \
 && tar -zxf /var/tmp/helm-setup/archive.tar.gz -C /var/tmp/helm-setup/ \
 && mv /var/tmp/helm-setup/linux-amd64/helm /usr/local/bin/helm \
 && rm -rf /var/tmp/helm-setup/ \
 && chmod a+rx /usr/local/bin/helm
-
-# consul (https://releases.hashicorp.com/consul/)
-RUN CONSUL_VERSION="1.2.2" \
-&& mkdir -p /var/tmp/consul-setup/ \
-&& curl -fsSL https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip -o /var/tmp/consul-setup/archive.zip \
-&& unzip /var/tmp/consul-setup/archive.zip -d /var/tmp/consul-setup/ \
-&& mv /var/tmp/consul-setup/consul /usr/local/bin/consul \
-&& rm -rf /var/tmp/consul-setup/ \
-&& chmod a+rx /usr/local/bin/consul
 
 # terraform (https://releases.hashicorp.com/terraform/)
 RUN TERRAFORM_VERSION="0.11.8" \
@@ -56,7 +47,7 @@ RUN TERRAFORM_VERSION="0.11.8" \
 && chmod a+rx /usr/local/bin/terraform
 
 # vault (https://releases.hashicorp.com/vault/)
-RUN VAULT_VERSION="0.11.0" \
+RUN VAULT_VERSION="0.11.2" \
 && mkdir -p /var/tmp/vault-setup/ \
 && curl -fsSL https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip -o /var/tmp/vault-setup/archive.zip \
 && unzip /var/tmp/vault-setup/archive.zip -d /var/tmp/vault-setup/ \

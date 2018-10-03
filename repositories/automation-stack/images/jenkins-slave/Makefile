@@ -16,7 +16,6 @@ build:
 shell:
 	docker run --interactive --tty --rm ${DOCKER_IMAGE_PREFIX}jenkins-slave:${draftVersion} bash
 test:
-	$(call run,consul --version)
 	$(call run,curl --version)
 	$(call run,docker --version)
 	$(call run,docker-compose --version)

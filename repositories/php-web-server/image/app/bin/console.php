@@ -1,9 +1,9 @@
 #!/usr/bin/env php
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
-
 set_time_limit(0);
+
+require_once __DIR__.'/../vendor/autoload.php';
 
 /** @var string $version */
 $version = $_ENV['WEBSERVER_VERSION'] ?: 'undefined';

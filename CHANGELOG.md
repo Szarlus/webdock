@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Removed
+
+- Consul script from `jenskins-slave` image.
+
 ## [0.7.6] - 2018-10-01
 
 ### Added

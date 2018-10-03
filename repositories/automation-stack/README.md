@@ -19,7 +19,6 @@ and few useful CLI scripts inside:
 - `docker-compose`,
 - `kubectl`,
 - `helm`,
-- `consul`,
 - `terraform`,
 - `vault`.
 
