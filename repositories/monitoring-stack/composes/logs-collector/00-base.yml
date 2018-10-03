@@ -18,6 +18,9 @@ services:
     - monitoring_tier
     ports:
     - ${FLUENT_COLLECTOR_PORT}:24284
+    cpu_shares: 1024
+    mem_limit: 1gb
+    memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
 
@@ -30,6 +33,9 @@ services:
     volumes:
     - mongo_config:/data/configdb
     - mongo_data:/data/db
+    cpu_shares: 1024
+    mem_limit: 1gb
+    memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
 
@@ -47,6 +53,9 @@ services:
     - ME_CONFIG_BASICAUTH_PASSWORD=${MONGO_EXPRESS_PASSWORD}
     ports:
     - ${MONGO_EXPRESS_PORT}:8081
+    cpu_shares: 256
+    mem_limit: 1gb
+    memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
 

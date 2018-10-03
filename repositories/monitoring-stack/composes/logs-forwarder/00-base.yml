@@ -7,13 +7,14 @@ services:
     - FF_SHARED_SECRET
     - FF_FLUENT_COLLECTOR_HOST
     - FF_FLUENT_COLLECTOR_PORT
-    mem_limit: 128m
-    memswap_limit: 0
     networks:
     - default
     - monitoring_tier
     ports:
     - 127.0.0.1:${FLUENT_FORWARDER_PORT}:24224
+    cpu_shares: 256
+    mem_limit: 128mb
+    memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
 

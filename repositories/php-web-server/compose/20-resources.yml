@@ -37,6 +37,9 @@ services:
     - MINIO_SECRET_KEY=${MINIO_PASSWORD}
     volumes:
     - minio_data:/data
+    cpu_shares: 1024
+    mem_limit: 1gb
+    memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
 
@@ -52,6 +55,9 @@ services:
         exit 0
       "
     restart: on-failure
+    cpu_shares: 1024
+    mem_limit: 1gb
+    memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
 
@@ -65,6 +71,9 @@ services:
     - MYSQL_DATABASE=db0
     volumes:
     - mysql_data:/var/lib/mysql
+    cpu_shares: 1024
+    mem_limit: 1gb
+    memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
 
@@ -76,6 +85,9 @@ services:
     - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
     volumes:
     - rabbitmq_data:/var/lib/rabbitmq
+    cpu_shares: 1024
+    mem_limit: 1gb
+    memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
 
@@ -85,6 +97,9 @@ services:
     restart: on-failure
     volumes:
     - redis_data:/data
+    cpu_shares: 1024
+    mem_limit: 1gb
+    memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
 

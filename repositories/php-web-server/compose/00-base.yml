@@ -8,7 +8,8 @@ services:
     - .env
     environment:
     - WEBSERVER_VERSION=${DOCKER_IMAGE_VERSION}
-    mem_limit: 256m
+    cpu_shares: 1024
+    mem_limit: 64mb
     memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
@@ -24,7 +25,8 @@ services:
     environment:
     - WEBSERVER_VERSION=${DOCKER_IMAGE_VERSION}
     - WEBSERVER_CGI_WORKERS_COUNT=5
-    mem_limit: 256m
+    cpu_shares: 1024
+    mem_limit: 256mb
     memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
@@ -42,7 +44,8 @@ services:
     - WEBSERVER_CGI_SERVER_HOST=cgi_server
     - WEBSERVER_CGI_SERVER_PORT=9000
     - WEBSERVER_HTTP_WORKERS_COUNT=5
-    mem_limit: 64m
+    cpu_shares: 1024
+    mem_limit: 64mb
     memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
@@ -57,7 +60,8 @@ services:
     - .env
     environment:
     - WEBSERVER_VERSION=${DOCKER_IMAGE_VERSION}
-    mem_limit: 64m
+    cpu_shares: 1024
+    mem_limit: 64mb
     memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
@@ -72,7 +76,8 @@ services:
     - .env
     environment:
     - WEBSERVER_VERSION=${DOCKER_IMAGE_VERSION}
-    mem_limit: 64m
+    cpu_shares: 1024
+    mem_limit: 64mb
     memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
