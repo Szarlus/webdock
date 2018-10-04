@@ -1,40 +1,19 @@
 version: "2"
+x-dependencies:
+  &dependencies
+  depends_on:
+  - minio
+  - mongo
+  - mysql
+  - postgres
+  - rabbitmq
+  - redis
+
 services:
-  migrator:
-    depends_on:
-    - minio
-    - mongo
-    - mysql
-    - postgres
-    - rabbitmq
-    - redis
-
-  cgi_server:
-    depends_on:
-    - minio
-    - mongo
-    - mysql
-    - postgres
-    - rabbitmq
-    - redis
-
-  task_scheduler:
-    depends_on:
-    - minio
-    - mongo
-    - mysql
-    - postgres
-    - rabbitmq
-    - redis
-
-  example_worker:
-    depends_on:
-    - minio
-    - mongo
-    - mysql
-    - postgres
-    - rabbitmq
-    - redis
+  cgi_server: *dependencies
+  example_worker: *dependencies
+  migrator: *dependencies
+  task_scheduler: *dependencies
 
   minio:
     image: minio/minio:latest

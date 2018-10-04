@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.7.7] - 2018-10-05
+
 ### Added
 
 - Migrator service inside `php-web-server` repository.
 - Missing memory and CPU limits for Compose services.
 - MongoDB and PostgreSQL services.
+- Use YAML anchors to avoid repetitions in Compose files.
 
 ### Removed
 

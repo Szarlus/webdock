@@ -34,7 +34,6 @@ services:
   http_server:
     depends_on:
     - cgi_server
-    - migrator
     image: ${DOCKER_IMAGE_PREFIX}php-web-server:${DOCKER_IMAGE_VERSION}
     restart: on-failure
     env_file:
