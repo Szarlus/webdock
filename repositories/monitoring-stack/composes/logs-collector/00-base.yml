@@ -2,17 +2,17 @@ version: "2"
 services:
   fluent_collector:
     depends_on:
-    - mongo
+    - influxdb
     image: ${DOCKER_IMAGE_PREFIX}fluent-collector:${DOCKER_IMAGE_VERSION}
     restart: on-failure
     environment:
     - FC_SHARED_SECRET
-    - FC_MONGO_HOST=mongo
-    - FC_MONGO_PORT=27017
-    - FC_MONGO_USER=${SERVICES_USER}
-    - FC_MONGO_PASSWORD=${MONGO_PASSWORD}
-    - FC_MONGO_DATABASE=admin
-    - FC_MONGO_COLLECTION=logs
+    - FC_INFLUXDB_HOST=influxdb
+    - FC_INFLUXDB_PORT=8086
+    - FC_INFLUXDB_USER=${SERVICES_USER}
+    - FC_INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD}
+    - FC_INFLUXDB_DATABASE=db0
+    - FC_LOG_LEVEL=debug
     networks:
     - default
     - monitoring_tier
@@ -23,36 +23,41 @@ services:
     memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
+#    logging:
+#      driver: json-file
 
-  mongo:
-    image: mongo:latest
+  influxdb:
+    image: influxdb:latest
     restart: on-failure
     environment:
-    - MONGO_INITDB_ROOT_USERNAME=${SERVICES_USER}
-    - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+#    - INFLUXDB_ADMIN_ENABLED=true
+#    - INFLUXDB_ADMIN_USER=admin
+#    - INFLUXDB_ADMIN_PASSWORD=Secret123
+    - INFLUXDB_USER=${SERVICES_USER}
+    - INFLUXDB_USER_PASSWORD=${INFLUXDB_PASSWORD}
+    - INFLUXDB_DB=db0
     volumes:
-    - mongo_config:/data/configdb
-    - mongo_data:/data/db
+    - influxdb_data:/var/lib/influxdb
     cpu_shares: 1024
     mem_limit: 1gb
     memswap_limit: 0
     labels:
     - version=${DOCKER_IMAGE_VERSION}
 
-  mongo_express:
+  chronograf:
     depends_on:
-    - mongo
-    image: mongo-express:latest
+    - influxdb
+    image: chronograf:latest
     restart: on-failure
-    environment:
-    - ME_CONFIG_MONGODB_SERVER=mongo
-    - ME_CONFIG_MONGODB_PORT=27017
-    - ME_CONFIG_MONGODB_ADMINUSERNAME=${SERVICES_USER}
-    - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_PASSWORD}
-    - ME_CONFIG_BASICAUTH_USERNAME=${SERVICES_USER}
-    - ME_CONFIG_BASICAUTH_PASSWORD=${MONGO_EXPRESS_PASSWORD}
+#    environment:
+#    - INFLUXDB_URL=http://influxdb:8086
+#    - INFLUXDB_USERNAME=${SERVICES_USER}
+#    - INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD}
+#    - TOKEN_SECRET=xyz
+    volumes:
+    - chronograf_config:/var/lib/chronograf
     ports:
-    - ${MONGO_EXPRESS_PORT}:8081
+    - ${CHRONOGRAF_PORT}:8888
     cpu_shares: 256
     mem_limit: 1gb
     memswap_limit: 0
@@ -64,8 +69,8 @@ networks:
     external: true
 
 volumes:
-  mongo_config:
+  chronograf_config:
     driver: local
 
-  mongo_data:
+  influxdb_data:
     driver: local

@@ -2,7 +2,7 @@ version: "2"
 services:
   fluent_forwarder:
     image: ${DOCKER_IMAGE_PREFIX}fluent-forwarder:${DOCKER_IMAGE_VERSION}
-    restart: always
+    restart: on-failure
     environment:
     - FF_SHARED_SECRET
     - FF_FLUENT_COLLECTOR_HOST
