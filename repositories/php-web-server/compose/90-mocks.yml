@@ -1,20 +1,14 @@
 version: "2"
+x-dependencies:
+  &dependencies
+  depends_on:
+  - mailhog
+
 services:
-  migrator:
-    depends_on:
-    - mailhog
-
-  cgi_server:
-    depends_on:
-    - mailhog
-
-  task_scheduler:
-    depends_on:
-    - mailhog
-
-  example_worker:
-    depends_on:
-    - mailhog
+  cgi_server: *dependencies
+  example_worker: *dependencies
+  migrator: *dependencies
+  task_scheduler: *dependencies
 
   mailhog:
     image: mailhog/mailhog:latest
