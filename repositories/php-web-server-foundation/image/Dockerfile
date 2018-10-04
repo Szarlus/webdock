@@ -10,6 +10,8 @@ RUN apt-get install --yes \
     git \
 && apt-get clean
 
+ENV COMPOSER_ALLOW_SUPERUSER="1"
+
 ADD https://getcomposer.org/installer /usr/local/bin/composer-installer
 RUN php /usr/local/bin/composer-installer --install-dir=/usr/local/bin/ --filename=composer \
 && COMPOSER_CACHE_DIR="/var/cache/composer/" \

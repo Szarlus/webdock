@@ -3,7 +3,7 @@ ARG DOCKER_IMAGE_PREFIX="damlys/webdock-"
 FROM ${DOCKER_IMAGE_PREFIX}web-assets-builder:0.0.1-example AS assets_builder
 COPY app/ /opt/app/
 WORKDIR /opt/app/
-RUN npm install --unsafe-perm
+RUN npm install
 
 FROM ${DOCKER_IMAGE_PREFIX}web-client-foundation:0.0.1-example
 # has user deploy:1000

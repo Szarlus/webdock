@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Consul script from `jenskins-slave` image.
 
+### Fixed
+
+- Allow to use package managers as super user.
+
 ## [0.7.6] - 2018-10-01
 
 ### Added

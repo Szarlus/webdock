@@ -21,7 +21,7 @@ default: assets-builder-shell
 download-application-packages:
 	$(call run_assets_builder,npm install --ignore-scripts)
 build-appilcation:
-	$(call run_assets_builder,npm install --unsafe-perm)
+	$(call run_assets_builder,npm install)
 test-application:
 	$(call run_assets_builder,npm test)
 build: download-application-packages

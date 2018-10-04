@@ -8,6 +8,8 @@ RUN apt-get install --yes \
     git \
 && apt-get clean
 
+RUN npm config set unsafe-perm true --global
+
 RUN NPM_CACHE_DIR="/var/cache/npm/" \
 && mkdir --parents ${NPM_CACHE_DIR} \
 && chmod --recursive 766 ${NPM_CACHE_DIR} \
