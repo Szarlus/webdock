@@ -20,7 +20,7 @@ default: application-builder-shell
 
 download-application-packages:
 	$(call run_application_builder,composer install --no-interaction --no-autoloader --no-scripts)
-build-appilcation:
+build-application:
 	$(call run_application_builder,composer install --no-interaction)
 test-application:
 	$(call run_application_builder,composer test)
